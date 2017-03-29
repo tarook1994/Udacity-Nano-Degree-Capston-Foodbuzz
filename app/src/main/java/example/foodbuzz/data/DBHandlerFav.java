@@ -10,20 +10,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by DELL on 3/28/2017.
+ * Created by DELL on 3/29/2017.
  */
-
-public class DBHandler extends SQLiteOpenHelper {
+public class DBHandlerFav extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
     private static final int DATABASE_VERSION = 1;
 
     // Database Name
-    private static final String DATABASE_NAME = "restaurantsManager";
+    private static final String DATABASE_NAME = "FavrestaurantsManager";
 
     // Contacts table name
-    private static final String TABLE_RESTAURANTS= "restaurants";
+    private static final String TABLE_FAV= "fav";
 
     // Contacts Table Columns names
     private static final String KEY_ID = "id";
@@ -31,17 +30,19 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String KEY_DESC = "describtion";
     private static final String KEY_PRICE = "price";
     private static final String KEY_RATING = "rating";
+    private static final String KEY_ICON = "icon";
 
-    public DBHandler(Context context) {
+
+    public DBHandlerFav(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_RESTAURANTS + "("
+        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_FAV + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
-                + KEY_DESC + " TEXT," +KEY_PRICE + " TEXT,"+KEY_RATING+" TEXT"+ ")";
+                + KEY_DESC + " TEXT," +KEY_PRICE + " TEXT,"+KEY_RATING+" TEXT,"+ KEY_ICON+" TEXT" +")";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
 
@@ -49,7 +50,7 @@ public class DBHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_RESTAURANTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_FAV);
 
         // Create tables again
         onCreate(db);
@@ -62,15 +63,16 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(KEY_DESC, restaurant.getDescription());
         values.put(KEY_PRICE, restaurant.getPrice());
         values.put(KEY_RATING, restaurant.getRating());
-        db.insert(TABLE_RESTAURANTS, null, values);
+        values.put(KEY_ICON, restaurant.getIcon());
+        db.insert(TABLE_FAV, null, values);
         db.close();
 
     }
 
-    public List<Restaurant> getAllContacts() {
+    public List<Restaurant> getAllFavList() {
         List<Restaurant> restaurantList = new ArrayList<>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_RESTAURANTS;
+        String selectQuery = "SELECT  * FROM " + TABLE_FAV;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);

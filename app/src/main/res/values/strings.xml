@@ -21,9 +21,7 @@
     <string name="error5">Email does not exist, please register from the button below. </string>
 
 
-
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
-
 
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -119,4 +117,6 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="title_activity_profile">ProfileActivity</string>
+    <string name="title_activity_main3">Main3Activity</string>
+    <string name="title_activity_fav">FavActivity</string>
 </resources>

@@ -1,5 +1,6 @@
 package example.foodbuzz.Activities;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -32,6 +33,7 @@ public class DetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         land = (ImageView) findViewById(R.id.land_image);
         recyclerView = (RecyclerView) findViewById(R.id.categories);
         String[] cat = getIntent().getStringExtra("cat").split(",");

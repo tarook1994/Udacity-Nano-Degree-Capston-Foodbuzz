@@ -50,7 +50,20 @@ public class Restaurant {
         this.rating = rating;
     }
 
-    String name,description,price,rating;
+    String name;
+    String description;
+    String price;
+    String rating;
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    String icon;
 
     public Restaurant(int id,String name, String description, String price, String rating){
         this.id = id;
@@ -58,6 +71,14 @@ public class Restaurant {
         this.description = description;
         this.price = price;
         this.rating = rating;
+    }
+    public Restaurant(int id,String name, String description, String price, String rating,String icon){
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.rating = rating;
+        this.icon = icon;
     }
 
 

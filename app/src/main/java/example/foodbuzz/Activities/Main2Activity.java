@@ -77,6 +77,9 @@ public class Main2Activity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent i = new Intent(Main2Activity.this,FavActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.slide_up,R.anim.slide_down);
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
