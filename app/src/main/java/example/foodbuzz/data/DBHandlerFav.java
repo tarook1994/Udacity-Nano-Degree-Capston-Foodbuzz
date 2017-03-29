@@ -16,21 +16,21 @@ public class DBHandlerFav extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 1;
 
     // Database Name
-    private static final String DATABASE_NAME = "FavrestaurantsManager";
+    public static final String DATABASE_NAME = "FavrestaurantsManager";
 
     // Contacts table name
-    private static final String TABLE_FAV= "fav";
+    public static final String TABLE_FAV= "fav";
 
     // Contacts Table Columns names
-    private static final String KEY_ID = "id";
-    private static final String KEY_NAME = "name";
-    private static final String KEY_DESC = "describtion";
-    private static final String KEY_PRICE = "price";
-    private static final String KEY_RATING = "rating";
-    private static final String KEY_ICON = "icon";
+     public static final String KEY_ID = "id";
+     public static final String KEY_NAME = "name";
+     public static final String KEY_DESC = "describtion";
+     public static final String KEY_PRICE = "price";
+     public static final String KEY_RATING = "rating";
+     public static final String KEY_ICON = "icon";
 
 
     public DBHandlerFav(Context context) {
@@ -86,11 +86,22 @@ public class DBHandlerFav extends SQLiteOpenHelper {
                 res.setDescription(cursor.getString(2));
                 res.setPrice(cursor.getString(3));
                 res.setRating(cursor.getString(4));
+                res.setIcon(cursor.getString(5));
 
                 restaurantList.add(res);
             } while (cursor.moveToNext());
         }
 
         return restaurantList;
+    }
+
+    public long delete( String name ){
+        //COLOMN_NAME+" like ?"
+        String where = KEY_NAME+ "='" + name+"'";
+        String whereArgs[] = null;
+        SQLiteDatabase db = getWritableDatabase();
+        long test = db.delete(TABLE_FAV,where, whereArgs);
+        return test;
+
     }
 }

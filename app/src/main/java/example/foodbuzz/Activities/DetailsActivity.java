@@ -2,6 +2,8 @@ package example.foodbuzz.Activities;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,6 +12,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -22,10 +25,13 @@ import example.foodbuzz.Adapters.Divider;
 import example.foodbuzz.Adapters.RecyclerTouchListener;
 import example.foodbuzz.Adapters.RestaurantAdapter;
 import example.foodbuzz.R;
+import example.foodbuzz.data.DBHandlerFav;
+import example.foodbuzz.data.Restaurant;
 
 public class DetailsActivity extends AppCompatActivity {
     ImageView land;
     RecyclerView recyclerView;
+    DBHandlerFav database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +40,7 @@ public class DetailsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        database = new DBHandlerFav(getApplicationContext());
         land = (ImageView) findViewById(R.id.land_image);
         recyclerView = (RecyclerView) findViewById(R.id.categories);
         String[] cat = getIntent().getStringExtra("cat").split(",");
@@ -60,13 +67,59 @@ public class DetailsActivity extends AppCompatActivity {
         }));
         Picasso.with(getApplicationContext()).load(getIntent().getStringExtra("land")).into(land);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabDetails);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                if(!checkIfFoundInDB()){
+                    Restaurant res = new Restaurant(Integer.parseInt(getIntent().getStringExtra("position")),getIntent().getStringExtra("name"),
+                            getIntent().getStringExtra("desc"),getIntent().getStringExtra("price"),
+                            getIntent().getStringExtra("rating"),getIntent().getStringExtra("icon"));
+
+                    DBHandlerFav db = new DBHandlerFav(getApplicationContext());
+                    db.addRow(res);
+                    fab.setImageDrawable(getDrawable(R.drawable.heartlast));
+                    Snackbar.make(view, "Added to Favorates", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                } else {
+                    fab.setImageDrawable(getDrawable(R.drawable.white));
+                    database.delete(getIntent().getStringExtra("name"));
+                    Snackbar.make(view, "Removed from Favorates", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+
             }
         });
+        if(checkIfFoundInDB()){
+            fab.setImageDrawable(getDrawable(R.drawable.heartlast));
+        }
+    }
+
+    public boolean checkIfFoundInDB(){
+        boolean nameFound = false;
+        String[] result_columns = new String[] {
+                DBHandlerFav.KEY_NAME};
+// Specify the where clause that will limit our results.
+        String where = null;
+// Replace these with valid SQL statements as necessary.
+        String whereArgs[] = null;
+        String groupBy = null;
+        String having = null;
+        String order = null;
+        SQLiteDatabase db = database.getWritableDatabase();
+        Cursor cursor = db.query(DBHandlerFav.TABLE_FAV,
+                result_columns, where, whereArgs, groupBy, having, order);
+        int index = cursor.getColumnIndexOrThrow(DBHandlerFav.KEY_NAME);
+        while (cursor.moveToNext()) {
+
+            Log.d("hey",cursor.getString(index) + "");
+            if(cursor.getString(index).equals(getIntent().getStringExtra("name"))){
+                Log.d("ana gowa","la2eto");
+                nameFound=true;
+            }
+
+
+        }
+        return nameFound;
     }
 }

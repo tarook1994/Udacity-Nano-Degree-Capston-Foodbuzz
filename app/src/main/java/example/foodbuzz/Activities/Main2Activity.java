@@ -79,7 +79,7 @@ public class Main2Activity extends AppCompatActivity
             public void onClick(View view) {
                 Intent i = new Intent(Main2Activity.this,FavActivity.class);
                 startActivity(i);
-                overridePendingTransition(R.anim.slide_up,R.anim.slide_down);
+                overridePendingTransition(R.anim.slide_up,R.anim.fade_out);
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
@@ -156,6 +156,12 @@ public class Main2Activity extends AppCompatActivity
                         Intent i = new Intent(Main2Activity.this,DetailsActivity.class);
                         i.putExtra("land",landPhoto.get(position));
                         i.putExtra("cat",category.get(position));
+                        i.putExtra("name",title.get(position));
+                        i.putExtra("desc",desc.get(position));
+                        i.putExtra("icon",thumbPhoto.get(position));
+                        i.putExtra("rating",rating.get(position));
+                        i.putExtra("price",price.get(position));
+                        i.putExtra("position",position+"");
                         Log.d("cat",category.get(position));
                         Log.d("catUrl",categoryUrl.get(position));
 
