@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "638285146870",
+    "firebase_url": "https://foodbuzz-f558d.firebaseio.com",
+    "project_id": "foodbuzz-f558d",
+    "storage_bucket": "foodbuzz-f558d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:638285146870:android:bfa66f466436a49a",
+        "android_client_info": {
+          "package_name": "example.foodbuzz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "638285146870-8qehrt6k74kgt2j2ok47ppfiomdtijc2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqKF_oZDV8-EbMQQP2JfrNnQ7r_Tx5IKI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
