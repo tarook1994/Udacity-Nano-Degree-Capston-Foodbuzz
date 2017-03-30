@@ -8,10 +8,111 @@
     tools:context="example.foodbuzz.Activities.ProfileActivity"
     tools:showIn="@layout/activity_profile">
 
-    <TextView
-        android:layout_width="wrap_content"
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:text="@string/large_text" />
+        android:padding="@dimen/activity_horizontal_margin"
+        android:id="@+id/layout_name"
+        android:layout_marginTop="15dp">
+
+        <ImageView
+            android:id="@+id/edit_image_name"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:src="@drawable/ic_action_name" />
+
+        <EditText
+            android:id="@+id/txt_edit_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_toEndOf="@id/edit_image_name"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:background="@color/white"
+            android:inputType="textEmailAddress"
+            android:text="Name"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#212121" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/divider" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:id="@+id/layout_mail">
+
+        <ImageView
+            android:id="@+id/edit_image_mail"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:src="@drawable/ic_action_name" />
+
+        <EditText
+            android:id="@+id/txt_edit_mail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_toEndOf="@id/edit_image_mail"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:background="@color/white"
+            android:inputType="textEmailAddress"
+            android:text="chintan@letsnurture.com"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#212121" />
+
+    </RelativeLayout>
+
+
+
+    <include layout="@layout/divider" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:id="@+id/layout_password">
+
+        <ImageView
+            android:id="@+id/edit_image_password"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:src="@drawable/ic_action_name" />
+
+        <EditText
+            android:id="@+id/txt_edit_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_toEndOf="@id/edit_image_password"
+            android:background="@color/white"
+            android:ellipsize="end"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:text="202 Park"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#212121" />
+    </RelativeLayout>
+
+    <include layout="@layout/divider" />
+
+</LinearLayout>
+
+
+
 
 </android.support.v4.widget.NestedScrollView>

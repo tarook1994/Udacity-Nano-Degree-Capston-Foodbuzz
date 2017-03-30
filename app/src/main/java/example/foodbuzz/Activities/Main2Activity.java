@@ -48,6 +48,7 @@ public class Main2Activity extends AppCompatActivity
     private FirebaseDatabase database;
     private DatabaseReference myRef2;
     RecyclerView rest;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,15 +74,24 @@ public class Main2Activity extends AppCompatActivity
         //Getting data from DB
         getDataFromDatabaseIntoArrays();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+         fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setVisibility(View.INVISIBLE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(Main2Activity.this,FavActivity.class);
+                i.putStringArrayListExtra("name",title);
+                Log.d("title size",title.size()+"");
+                i.putStringArrayListExtra("cat",category);
+                i.putStringArrayListExtra("land",landPhoto);
+                i.putStringArrayListExtra("desc",desc);
+                i.putStringArrayListExtra("icon",thumbPhoto);
+                i.putStringArrayListExtra("catUrl",categoryUrl);
+                i.putStringArrayListExtra("rating",rating);
+                i.putStringArrayListExtra("price",price);
                 startActivity(i);
                 overridePendingTransition(R.anim.slide_up,R.anim.fade_out);
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
             }
         });
 
@@ -147,7 +157,8 @@ public class Main2Activity extends AppCompatActivity
 
                 rest.setAdapter(mAdapter);
                 rest.setVisibility(View.VISIBLE);
-
+                fab.setVisibility(View.VISIBLE);
+                fab.animate().alpha(1.0f).setDuration(100);
                 rest.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(),
                         rest,new RecyclerTouchListener.ClickListener() {
 
@@ -217,20 +228,17 @@ public class Main2Activity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.my_profile) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.my_orders) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.my_payments) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.help) {
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.sign_out) {
 
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

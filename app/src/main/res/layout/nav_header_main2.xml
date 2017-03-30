@@ -11,6 +11,6 @@
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/food" />
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/navigationpic" />
 </LinearLayout>
