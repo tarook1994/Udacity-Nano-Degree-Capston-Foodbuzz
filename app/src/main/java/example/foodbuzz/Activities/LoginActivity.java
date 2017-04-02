@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -63,6 +65,8 @@ public class LoginActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.password);
     }
 
+
+
     public  void signInAction(View view){
         if(email.getText().toString().isEmpty()){
             email.setError(Html.fromHtml(getResources().getString(R.string.error1)));
@@ -86,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                             if(task.isSuccessful()){
                                 progressDialog.dismiss();
                                 Intent i = new Intent(LoginActivity.this,Main2Activity.class);
+                                i.putExtra("email",email.getText().toString());
                                 startActivity(i);
                             } else {
                                 progressDialog.dismiss();

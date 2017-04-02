@@ -39,7 +39,8 @@
         <activity
             android:name=".Activities.FavActivity"
             android:label="@string/title_activity_fav"
-            android:theme="@style/AppThemeBase"></activity>
+            android:theme="@style/AppThemeBase" />
+        <activity android:name=".Activities.PaymentActivity"></activity>
     </application>
 
 </manifest>

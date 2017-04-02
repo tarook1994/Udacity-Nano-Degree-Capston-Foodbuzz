@@ -108,6 +108,17 @@ public class Main2Activity extends AppCompatActivity
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        for(int i = 0;i<navigationView.getHeaderCount();i++){
+            navigationView.getMenu().getItem(i).setChecked(false);
+
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -229,10 +240,15 @@ public class Main2Activity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.my_profile) {
-            // Handle the camera action
+            Intent i = new Intent(Main2Activity.this,ProfileActivity.class);
+            i.putExtra("email",getIntent().getStringExtra("email"));
+            startActivity(i);
+
         } else if (id == R.id.my_orders) {
 
         } else if (id == R.id.my_payments) {
+            Intent i = new Intent(Main2Activity.this,PaymentActivity.class);
+            startActivity(i);
 
         } else if (id == R.id.help) {
 

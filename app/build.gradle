@@ -39,6 +39,7 @@ dependencies {
     compile 'com.google.firebase:firebase-auth:9.2.0'
     compile 'com.pitt.loading.library:library:0.8'
     compile 'com.google.firebase:firebase-ads:9.2.0'
+    compile 'com.simplify:simplify-android:3.0.0'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'
