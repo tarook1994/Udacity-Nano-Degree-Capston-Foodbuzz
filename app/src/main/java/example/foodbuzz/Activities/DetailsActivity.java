@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -93,6 +94,12 @@ public class DetailsActivity extends AppCompatActivity {
         if(checkIfFoundInDB()){
             fab.setImageDrawable(getDrawable(R.drawable.heartlast));
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        this.finish();
+        return super.onOptionsItemSelected(item);
     }
 
     public boolean checkIfFoundInDB(){

@@ -7,18 +7,24 @@
     android:orientation="vertical"
     tools:context="example.foodbuzz.Activities.PaymentActivity">
 
+
     <com.simplify.android.sdk.CardEditor
         android:id="@+id/card_editor"
         android:layout_width="match_parent"
-        android:layout_height="250dp">
+        android:layout_height="wrap_content">
 
     </com.simplify.android.sdk.CardEditor>
 
     <Button
         android:id="@+id/paynow"
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:text="PAY NOW" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:background="@color/accent"
+        android:text="PAY NOW"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 
 
 </LinearLayout>

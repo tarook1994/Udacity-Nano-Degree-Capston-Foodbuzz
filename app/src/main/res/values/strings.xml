@@ -12,6 +12,7 @@
     <string name="register">Register</string>
     <string name="name">Name</string>
     <string name="wait">Please Wait ... </string>
+    Error Processing Card
 
     <string name="member">Already a member? Login Here !</string>
     <string name="error1"><font color='#ffffff'>Please fill in the email field</font></string>
@@ -19,6 +20,8 @@
     <string name="error3">Please enter a valid email</string>
     <string name="error4">Wrong Email or Password, Please try again. </string>
     <string name="error5">Email does not exist, please register from the button below. </string>
+    <string name="error6">Error Processing Card</string>
+
 
 
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
