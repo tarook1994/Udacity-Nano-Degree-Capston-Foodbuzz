@@ -40,7 +40,7 @@
             android:name=".Activities.FavActivity"
             android:label="@string/title_activity_fav"
             android:theme="@style/AppThemeBase" />
-        <activity android:name=".Activities.PaymentActivity"></activity>
+        <activity android:name=".Activities.PaymentActivity" />
 
         <service
             android:name=".data.WidgetAdapter"
@@ -49,10 +49,10 @@
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <receiver
+            android:name=".data.FavWidget"
             android:icon="@drawable/food"
-            android:label="Example Widget"
-            android:name=".data.FavWidget" >
-            <intent-filter >
+            android:label="Example Widget">
+            <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
 
@@ -60,6 +60,8 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_info" />
         </receiver>
+
+        <activity android:name=".Activities.SubCategoryActivity"></activity>
     </application>
 
 </manifest>

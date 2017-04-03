@@ -76,6 +76,10 @@ public class DetailsActivity extends AppCompatActivity {
 
                         @Override
                         public void onClick(View view, int position) {
+                            Intent i = new Intent(DetailsActivity.this,SubCategoryActivity.class);
+                            i.putExtra("name",getIntent().getStringExtra("name"));
+                            i.putExtra("cat",cat[position]);
+                            startActivity(i);
 
                         }
 
@@ -108,6 +112,10 @@ public class DetailsActivity extends AppCompatActivity {
 
                 @Override
                 public void onClick(View view, int position) {
+                    Intent i = new Intent(DetailsActivity.this,SubCategoryActivity.class);
+                    i.putExtra("name",getIntent().getStringExtra("name"));
+                    i.putExtra("cat",cat[position]);
+                    startActivity(i);
 
                 }
 
