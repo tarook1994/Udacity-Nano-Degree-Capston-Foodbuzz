@@ -17,6 +17,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -33,6 +38,11 @@ public class DetailsActivity extends AppCompatActivity {
     ImageView land;
     RecyclerView recyclerView;
     DBHandlerFav database;
+    String[] cat;
+    String[] catUrl;
+    private FirebaseDatabase firebasedatabase;
+    private DatabaseReference myRef2;
+    String landImgFav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,29 +54,72 @@ public class DetailsActivity extends AppCompatActivity {
         database = new DBHandlerFav(getApplicationContext());
         land = (ImageView) findViewById(R.id.land_image);
         recyclerView = (RecyclerView) findViewById(R.id.categories);
-        String[] cat = getIntent().getStringExtra("cat").split(",");
-        String[] catUrl = getIntent().getStringExtra("catUrl").split(",");
-        CategoryAdapater mAdapter = new CategoryAdapater(cat,catUrl,getApplication());
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new Divider(getApplicationContext(), LinearLayoutManager.VERTICAL));
-        recyclerView.setAdapter(mAdapter);
-        recyclerView.setVisibility(View.VISIBLE);
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(),
-                recyclerView,new RecyclerTouchListener.ClickListener() {
+        if(getIntent().getStringExtra("cat")==null){
+            firebasedatabase = FirebaseDatabase.getInstance();
+            myRef2 = firebasedatabase.getReference();
+            myRef2.child("restaurants").child(getIntent().getStringExtra("name")).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
-            @Override
-            public void onClick(View view, int position) {
+                        cat =  dataSnapshot.child("Categories").getValue().toString().split(",");
+                        catUrl = dataSnapshot.child("CatUrl").getValue().toString().split(",");
+                        landImgFav = dataSnapshot.child("land").getValue().toString();
+                        CategoryAdapater mAdapter = new CategoryAdapater(cat,catUrl,getApplication());
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                        recyclerView.setLayoutManager(mLayoutManager);
+                        recyclerView.setItemAnimator(new DefaultItemAnimator());
+                        recyclerView.addItemDecoration(new Divider(getApplicationContext(), LinearLayoutManager.VERTICAL));
+                        recyclerView.setAdapter(mAdapter);
+                        recyclerView.setVisibility(View.VISIBLE);
+                        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(),
+                                recyclerView,new RecyclerTouchListener.ClickListener() {
 
-            }
+                        @Override
+                        public void onClick(View view, int position) {
 
-            @Override
-            public void onLongClick(View view, int position) {
+                        }
 
-            }
-        }));
-        Picasso.with(getApplicationContext()).load(getIntent().getStringExtra("land")).into(land);
+                        @Override
+                        public void onLongClick(View view, int position) {
+
+                        }
+                    }));
+                    Picasso.with(getApplicationContext()).load(landImgFav).into(land);
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        } else {
+            cat = getIntent().getStringExtra("cat").split(",");
+            catUrl = getIntent().getStringExtra("catUrl").split(",");
+            CategoryAdapater mAdapter = new CategoryAdapater(cat,catUrl,getApplication());
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+            recyclerView.setLayoutManager(mLayoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerView.addItemDecoration(new Divider(getApplicationContext(), LinearLayoutManager.VERTICAL));
+            recyclerView.setAdapter(mAdapter);
+            recyclerView.setVisibility(View.VISIBLE);
+            recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(),
+                    recyclerView,new RecyclerTouchListener.ClickListener() {
+
+                @Override
+                public void onClick(View view, int position) {
+
+                }
+
+                @Override
+                public void onLongClick(View view, int position) {
+
+                }
+            }));
+            Picasso.with(getApplicationContext()).load(getIntent().getStringExtra("land")).into(land);
+        }
+
+
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabDetails);
         fab.setOnClickListener(new View.OnClickListener() {
