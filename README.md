@@ -1,5 +1,8 @@
 # Udacity-Nano-Degree-Capston-Foodbuzz
 
+# NOTE!!
+The Application is not yet finalized. Therfore I will keep pushing up updates till it is finalized.
+
 # Description
 
 This project is the 2nd stage project in Udacity's nano degree Capstone Project, which is the graduation project of this degree.
