@@ -95,7 +95,7 @@ public class FavActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        this.finish();
+        finish();
         return super.onOptionsItemSelected(item);
     }
     public void addDataToArrayLists(List<Restaurant> list){

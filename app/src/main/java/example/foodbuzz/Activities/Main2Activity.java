@@ -186,6 +186,7 @@ public class Main2Activity extends AppCompatActivity
                         i.putExtra("position",position+"");
                         Log.d("cat",category.get(position));
                         Log.d("catUrl",categoryUrl.get(position));
+                        Log.d("Baft7","hena");
 
                         i.putExtra("catUrl",categoryUrl.get(position));
                         startActivity(i);

@@ -122,4 +122,8 @@
     <string name="title_activity_main3">Main3Activity</string>
     <string name="title_activity_fav">FavActivity</string>
     <string name="pay_now">PAY NOW</string>
+    <string name="add_cart">Add To Cart</string>
+    <string name="price">Price : </string>
+    <string name="total_price">Total : </string>
+
 </resources>

@@ -159,7 +159,7 @@ public class DetailsActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        this.finish();
+        finish();
         return super.onOptionsItemSelected(item);
     }
 

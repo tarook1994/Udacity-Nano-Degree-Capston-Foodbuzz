@@ -61,7 +61,8 @@
                 android:resource="@xml/widget_info" />
         </receiver>
 
-        <activity android:name=".Activities.SubCategoryActivity"></activity>
+        <activity android:name=".Activities.SubCategoryActivity" />
+        <activity android:name=".Activities.ChooseItemActivity"></activity>
     </application>
 
 </manifest>
