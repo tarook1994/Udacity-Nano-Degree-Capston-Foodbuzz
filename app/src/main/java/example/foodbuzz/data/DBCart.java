@@ -105,6 +105,16 @@ public class DBCart extends SQLiteOpenHelper {
 
     }
 
+    public long deleteOrder(){
+        //COLOMN_NAME+" like ?"
+        String where =null;
+        String whereArgs[] = null;
+        SQLiteDatabase db = getWritableDatabase();
+        long test = db.delete(TABLE_CART,where, whereArgs);
+        return test;
+
+    }
+
     public int updateCart(OrderItem orderItem) {
         SQLiteDatabase db = this.getWritableDatabase();
 

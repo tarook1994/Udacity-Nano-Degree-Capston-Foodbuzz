@@ -123,9 +123,17 @@
     <string name="title_activity_fav">FavActivity</string>
     <string name="pay_now">PAY NOW</string>
     <string name="add_cart">Add To Cart</string>
+    <string name="amout">The Total Amout is </string>
+    <string name="cash">Cash </string>
+    <string name="card">Card </string>
+    <string name="complete">Complete Order </string>
+    <string name="order">Complete Order </string>
     <string name="price">Price : </string>
     <string name="total_price">Total : </string>
     <string name="check_out">Check Out</string>
+    <string name="paymentok">Payment Successful</string>
+    <string name="paymentno">Payment Not Successful</string>
+
 
 
 </resources>

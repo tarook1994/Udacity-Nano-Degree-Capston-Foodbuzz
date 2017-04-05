@@ -8,10 +8,84 @@
     tools:context="example.foodbuzz.Activities.PaymentActivity">
 
 
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/amout"
+        android:textAlignment="center"
+        android:textSize="35sp" />
+
+    <TextView
+        android:id="@+id/amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="45sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            >
+
+            <ImageView
+                android:id="@+id/cardImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="58dp"
+                android:layout_marginTop="30dp"
+                app:srcCompat="@drawable/card" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/cardImage"
+                android:layout_centerHorizontal="true"
+                android:text="@string/card" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/cashImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="58dp"
+                android:layout_marginTop="30dp"
+                app:srcCompat="@drawable/cash" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/cashImage"
+                android:layout_centerHorizontal="true"
+                android:text="@string/cash" />
+        </RelativeLayout>
+    </LinearLayout>
+
     <com.simplify.android.sdk.CardEditor
         android:id="@+id/card_editor"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="gone">
 
     </com.simplify.android.sdk.CardEditor>
 
@@ -23,6 +97,7 @@
         android:layout_marginTop="20dp"
         android:background="@color/accent"
         android:text="@string/pay_now"
+        android:visibility="gone"
         android:textColor="@color/white"
         android:textSize="18sp" />
 

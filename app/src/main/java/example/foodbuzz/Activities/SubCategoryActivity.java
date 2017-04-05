@@ -95,6 +95,9 @@ public class SubCategoryActivity extends AppCompatActivity {
     public void fabClick(){
 
         Intent i = new Intent(SubCategoryActivity.this,CartActivity.class);
+        i.putExtra("name",getIntent().getStringExtra("name"));
+        i.putExtra("thumb",getIntent().getStringExtra("thumb"));
+        Log.d("nameSub",getIntent().getStringExtra("name"));
         startActivity(i);
         overridePendingTransition(R.anim.slide_up,R.anim.fade_out);
     }

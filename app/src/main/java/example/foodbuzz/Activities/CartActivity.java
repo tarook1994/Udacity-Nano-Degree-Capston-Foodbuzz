@@ -1,11 +1,13 @@
 package example.foodbuzz.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -34,6 +36,16 @@ public class CartActivity extends AppCompatActivity {
         order = new ArrayList<>();
         buildViews();
         buildRecyclerView();
+        checkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(CartActivity.this,PaymentActivity.class);
+                i.putExtra("amount",total.getText().toString());
+                i.putExtra("name",getIntent().getStringExtra("name"));
+                i.putExtra("thumb",getIntent().getStringExtra("thumb"));
+                startActivity(i);
+            }
+        });
 
     }
     public void buildViews(){
@@ -59,7 +71,7 @@ public class CartActivity extends AppCompatActivity {
             itemFinalPrice= Integer.parseInt(order.get(i).getNumber())*Double.parseDouble(order.get(i).getPrice().replace("$",""));
             totalPrice += itemFinalPrice;
         }
-        total.setText("Total Price : "+totalPrice);
+        total.setText(getResources().getString(R.string.total_price)+totalPrice);
 
     }
 }

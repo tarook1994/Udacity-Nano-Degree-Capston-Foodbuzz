@@ -2,6 +2,7 @@ package example.foodbuzz.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
@@ -89,6 +90,9 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
                                 progressDialog.dismiss();
+                                SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
+                                editor.putString("email",email.getText().toString());
+                                editor.apply();
                                 Intent i = new Intent(LoginActivity.this,Main2Activity.class);
                                 i.putExtra("email",email.getText().toString());
                                 startActivity(i);

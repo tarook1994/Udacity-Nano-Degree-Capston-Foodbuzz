@@ -1,13 +1,21 @@
 package example.foodbuzz.Activities;
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.simplify.android.sdk.CardEditor;
 import com.simplify.android.sdk.CardToken;
 import com.simplify.android.sdk.Simplify;
@@ -17,23 +25,44 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import example.foodbuzz.R;
+import example.foodbuzz.data.Order;
 
 public class PaymentActivity extends AppCompatActivity {
     Simplify simplify;
-     CardEditor cardEditor;
+    CardEditor cardEditor;
     Button checkoutButton;
     ProgressDialog progressDialog;
-
+    ImageView card,cash;
+    TextView amount;
+    boolean isCard;
+    String format;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
-        cardEditor = (CardEditor) findViewById(R.id.card_editor);
-        checkoutButton = (Button) findViewById(R.id.paynow);
+        buildViews();
+        amount.setText(getIntent().getStringExtra("amount")+ " $");
+        cash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cashClick();
+            }
+        });
+
+        card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cardClick();
+            }
+        });
+
+        isCard = false;
         simplify = new Simplify();
         simplify.setApiKey("sbpb_ZGJjNmNjMTktNjBmMy00MjYyLTk4ZWMtY2VlMGY3ODk0MGQ4");
         checkoutButton.setEnabled(false);
@@ -59,32 +88,87 @@ public class PaymentActivity extends AppCompatActivity {
     }
 
     public void payNow() {
-        simplify.createCardToken(cardEditor.getCard(), new CardToken.Callback() {
-            @Override
-            public void onSuccess(CardToken cardToken) {
-                // ...
-               String token =  cardToken.getId();
-                String[] params = new String[2];
-                params[0] = token;
-                params[1] = "100";
-                new BackgroundThread().execute(params);
+        if(checkoutButton.getText().toString().equals("PAY NOW")){
+            simplify.createCardToken(cardEditor.getCard(), new CardToken.Callback() {
+                @Override
+                public void onSuccess(CardToken cardToken) {
+                    // ...
+                    String token =  cardToken.getId();
+                    String[] params = new String[2];
+                    params[0] = token;
+                    params[1] = "100";
+                    new BackgroundThread().execute(params);
 
-            }
+                }
 
-            @Override
-            public void onError(Throwable throwable) {
-                progressDialog.dismiss();
-                Toast.makeText(PaymentActivity.this, R.string.error6 +" : "+throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                // ...
-            }
-        });
+                @Override
+                public void onError(Throwable throwable) {
+                    progressDialog.dismiss();
+                    Toast.makeText(PaymentActivity.this, R.string.error6 +" : "+throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                    // ...
+                }
+            });
+        } else {
+            Toast.makeText(this, "Cash Payment", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    public void buildViews(){
+        cardEditor = (CardEditor) findViewById(R.id.card_editor);
+        checkoutButton = (Button) findViewById(R.id.paynow);
+        card = (ImageView) findViewById(R.id.cardImage);
+        cash = (ImageView) findViewById(R.id.cashImage);
+        amount = (TextView) findViewById(R.id.amount);
+
+    }
+
+    public void cashClick(){
+        checkoutButton.setText(getResources().getString(R.string.order));
+        cardEditor.setVisibility(View.GONE);
+        checkoutButton.setVisibility(View.VISIBLE);
+
+    }
+
+    public void cardClick(){
+        checkoutButton.setText(getResources().getString(R.string.pay_now));
+        cardEditor.setVisibility(View.VISIBLE);
+        checkoutButton.setVisibility(View.VISIBLE);
+        isCard=true;
     }
     public class BackgroundThread extends AsyncTask<String,Void,Void>{
+
+        private FirebaseDatabase database;
+        private DatabaseReference myRef2;
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            progressDialog.dismiss();
+            database = FirebaseDatabase.getInstance();
+            myRef2 = database.getReference();
+
+            SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
+            format = s.format(new Date());
+            Order order;
+            if(isCard){
+                order = new Order(getIntent().getStringExtra("name"),getIntent().getStringExtra("amount"),
+                        getIntent().getStringExtra("thumb"),"Credit Cart");
+            } else {
+                order = new Order(getIntent().getStringExtra("name"),getIntent().getStringExtra("amount"),
+                        getIntent().getStringExtra("thumb"),"Cash");
+            }
+            myRef2.child("orders").child(format).setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
+                        String restoredText = prefs.getString("email", null);
+                        myRef2.child("users").child(restoredText.replace(".","")).child("historyLinks").setValue(format);
+                        progressDialog.dismiss();
+                        Toast.makeText(PaymentActivity.this, getResources().getString(R.string.paymentok), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
 
         }
 

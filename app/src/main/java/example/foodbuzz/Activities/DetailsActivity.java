@@ -1,12 +1,14 @@
 package example.foodbuzz.Activities;
 
 import android.app.ActionBar;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +18,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,7 +34,9 @@ import example.foodbuzz.Adapters.Divider;
 import example.foodbuzz.Adapters.RecyclerTouchListener;
 import example.foodbuzz.Adapters.RestaurantAdapter;
 import example.foodbuzz.R;
+import example.foodbuzz.data.DBCart;
 import example.foodbuzz.data.DBHandlerFav;
+import example.foodbuzz.data.OrderItem;
 import example.foodbuzz.data.Restaurant;
 
 public class DetailsActivity extends AppCompatActivity {
@@ -43,6 +48,18 @@ public class DetailsActivity extends AppCompatActivity {
     private FirebaseDatabase firebasedatabase;
     private DatabaseReference myRef2;
     String landImgFav;
+    DBCart cart;
+    ArrayList<OrderItem> order;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if(order.size()>0){
+            cart.deleteOrder();
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +71,8 @@ public class DetailsActivity extends AppCompatActivity {
         database = new DBHandlerFav(getApplicationContext());
         land = (ImageView) findViewById(R.id.land_image);
         recyclerView = (RecyclerView) findViewById(R.id.categories);
+        cart = new DBCart(getApplicationContext());
+        order = cart.getAllOrder();
         if(getIntent().getStringExtra("cat")==null){
             firebasedatabase = FirebaseDatabase.getInstance();
             myRef2 = firebasedatabase.getReference();
@@ -114,6 +133,8 @@ public class DetailsActivity extends AppCompatActivity {
                 public void onClick(View view, int position) {
                     Intent i = new Intent(DetailsActivity.this,SubCategoryActivity.class);
                     i.putExtra("name",getIntent().getStringExtra("name"));
+                    Log.d("nameDetail",getIntent().getStringExtra("name"));
+                    i.putExtra("thumb",getIntent().getStringExtra("icon"));
                     i.putExtra("cat",cat[position]);
                     startActivity(i);
 
@@ -159,6 +180,9 @@ public class DetailsActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if(order.size()>0){
+            cart.deleteOrder();
+        }
         finish();
         return super.onOptionsItemSelected(item);
     }
