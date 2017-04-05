@@ -14,8 +14,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.simplify.android.sdk.CardEditor;
 import com.simplify.android.sdk.CardToken;
 import com.simplify.android.sdk.Simplify;
@@ -29,6 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import example.foodbuzz.R;
+import example.foodbuzz.data.DBCart;
 import example.foodbuzz.data.Order;
 
 public class PaymentActivity extends AppCompatActivity {
@@ -40,6 +44,10 @@ public class PaymentActivity extends AppCompatActivity {
     TextView amount;
     boolean isCard;
     String format;
+    DBCart cart;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef2;
+
 
 
     @Override
@@ -47,6 +55,8 @@ public class PaymentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
         buildViews();
+        database = FirebaseDatabase.getInstance();
+        myRef2 = database.getReference();
         amount.setText(getIntent().getStringExtra("amount")+ " $");
         cash.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,6 +119,44 @@ public class PaymentActivity extends AppCompatActivity {
                 }
             });
         } else {
+            Order order = new Order(getIntent().getStringExtra("name"),getIntent().getStringExtra("amount"),
+                    getIntent().getStringExtra("thumb"),"Cash");
+            SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
+            format = s.format(new Date());
+            myRef2.child("orders").child(format).setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
+                        String restoredText = prefs.getString("email", null);
+                        myRef2.child("users").child(restoredText.replace(".","")).child("historyLinks")
+                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
+                                        String restoredText = prefs.getString("email", null);
+                                        if(dataSnapshot.getValue().toString().equals("null")){
+                                            myRef2.child("users").child(restoredText.replace(".","")).child("historyLinks").setValue(format);
+                                        } else {
+                                            myRef2.child("users").child(restoredText.replace(".","")).child("historyLinks").setValue(dataSnapshot
+                                                    .getValue().toString()+","+format);
+                                        }
+                                        progressDialog.dismiss();
+                                        Toast.makeText(PaymentActivity.this, getResources().getString(R.string.orderok),
+                                                Toast.LENGTH_SHORT).show();
+                                        cart = new DBCart(getApplicationContext());
+                                        cart.deleteOrder();
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                    }
+                }
+            });
             Toast.makeText(this, "Cash Payment", Toast.LENGTH_SHORT).show();
         }
 
@@ -127,6 +175,7 @@ public class PaymentActivity extends AppCompatActivity {
         checkoutButton.setText(getResources().getString(R.string.order));
         cardEditor.setVisibility(View.GONE);
         checkoutButton.setVisibility(View.VISIBLE);
+        checkoutButton.setEnabled(true);
 
     }
 
@@ -138,14 +187,12 @@ public class PaymentActivity extends AppCompatActivity {
     }
     public class BackgroundThread extends AsyncTask<String,Void,Void>{
 
-        private FirebaseDatabase database;
-        private DatabaseReference myRef2;
+
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            database = FirebaseDatabase.getInstance();
-            myRef2 = database.getReference();
+
 
             SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
             format = s.format(new Date());
@@ -163,9 +210,31 @@ public class PaymentActivity extends AppCompatActivity {
                     if(task.isSuccessful()){
                         SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
                         String restoredText = prefs.getString("email", null);
-                        myRef2.child("users").child(restoredText.replace(".","")).child("historyLinks").setValue(format);
-                        progressDialog.dismiss();
-                        Toast.makeText(PaymentActivity.this, getResources().getString(R.string.paymentok), Toast.LENGTH_SHORT).show();
+                        myRef2.child("users").child(restoredText.replace(".","")).child("historyLinks")
+                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
+                                        String restoredText = prefs.getString("email", null);
+                                        if(dataSnapshot.getValue().toString().equals("null")){
+                                            myRef2.child("users").child(restoredText.replace(".","")).child("historyLinks").setValue(format);
+                                        } else {
+                                            myRef2.child("users").child(restoredText.replace(".","")).child("historyLinks").setValue(dataSnapshot
+                                                    .getValue().toString()+","+format);
+                                        }
+                                        progressDialog.dismiss();
+                                        Toast.makeText(PaymentActivity.this, getResources().getString(R.string.paymentok),
+                                                Toast.LENGTH_SHORT).show();
+                                        cart = new DBCart(getApplicationContext());
+                                        cart.deleteOrder();
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
                     }
                 }
             });

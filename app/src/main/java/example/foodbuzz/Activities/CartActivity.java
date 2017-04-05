@@ -27,6 +27,16 @@ public class CartActivity extends AppCompatActivity {
     Button checkout;
     DBCart cart;
     ArrayList<OrderItem> order;
+    boolean backFromActivityB=false;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(backFromActivityB){
+            finish();
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +53,7 @@ public class CartActivity extends AppCompatActivity {
                 i.putExtra("amount",total.getText().toString());
                 i.putExtra("name",getIntent().getStringExtra("name"));
                 i.putExtra("thumb",getIntent().getStringExtra("thumb"));
+                backFromActivityB = true;
                 startActivity(i);
             }
         });

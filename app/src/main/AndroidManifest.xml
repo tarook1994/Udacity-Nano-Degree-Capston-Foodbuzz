@@ -63,7 +63,10 @@
 
         <activity android:name=".Activities.SubCategoryActivity" />
         <activity android:name=".Activities.ChooseItemActivity" />
-        <activity android:name=".Activities.CartActivity"></activity>
+        <activity android:name=".Activities.CartActivity" />
+        <activity
+            android:name=".Activities.MyOrdersActivity"
+            android:theme="@style/AppThemeBase"></activity>
     </application>
 
 </manifest>

@@ -132,8 +132,8 @@
     <string name="total_price">Total : </string>
     <string name="check_out">Check Out</string>
     <string name="paymentok">Payment Successful</string>
-    <string name="paymentno">Payment Not Successful</string>
-
+    <string name="paymentno">Payment Not Successful! Your order is being prepared </string>
+    <string name="orderok">Order is Successful! Your order is being prepared </string>
 
 
 </resources>

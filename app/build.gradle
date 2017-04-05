@@ -1,46 +1,27 @@
-apply plugin: 'com.android.application'
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-android {
-    compileSdkVersion 23
-    buildToolsVersion "25.0.0"
-    defaultConfig {
-        applicationId "example.foodbuzz"
-        minSdkVersion 21
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.0'
+        classpath 'com.google.gms:google-services:3.0.0'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
     }
 }
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-
-
-
-
-    compile 'com.weiwangcn.betterspinner:library-material:1.1.0'
-    compile 'com.android.support:appcompat-v7:23.2.0'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:design:23.2.0'
-    compile 'com.android.support:cardview-v7:23.2.0'
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'de.hdodenhof:circleimageview:1.3.0'
-    compile 'com.google.firebase:firebase-database:9.2.0'
-    compile 'com.google.firebase:firebase-auth:9.2.0'
-    compile 'com.pitt.loading.library:library:0.8'
-    compile 'com.google.firebase:firebase-ads:9.2.0'
-    compile 'com.simplify:simplify-android:3.0.0'
-    compile 'com.vinaygaba:creditcardview:1.0.3'
-    testCompile 'junit:junit:4.12'
+allprojects {
+    repositories {
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
 }
-apply plugin: 'com.google.gms.google-services'
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

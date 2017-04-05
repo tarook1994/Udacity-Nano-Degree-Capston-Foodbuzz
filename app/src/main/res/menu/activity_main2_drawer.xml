@@ -11,14 +11,6 @@
             android:icon="@drawable/myorder"
             android:title="My Orders" />
         <item
-            android:id="@+id/my_payments"
-            android:icon="@drawable/mypayments"
-            android:title="My Payments" />
-        <item
-            android:id="@+id/help"
-            android:icon="@drawable/help"
-            android:title="Help" />
-        <item
             android:id="@+id/sign_out"
             android:icon="@drawable/signout"
             android:title="Sign Out" />

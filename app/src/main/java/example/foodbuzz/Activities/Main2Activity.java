@@ -56,9 +56,10 @@ public class Main2Activity extends AppCompatActivity
         setContentView(R.layout.activity_main2);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarmain);
         setSupportActionBar(toolbar);
-        AdView mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("F6D4AAD12B9EF5EB0EC01C34C4565239").build();
-        mAdView.loadAd(adRequest);
+
+//        AdView mAdView = (AdView) findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder().addTestDevice("F6D4AAD12B9EF5EB0EC01C34C4565239").build();
+//        mAdView.loadAd(adRequest);
 
         database = FirebaseDatabase.getInstance();
         myRef2 = database.getReference();
@@ -246,15 +247,11 @@ public class Main2Activity extends AppCompatActivity
             startActivity(i);
 
         } else if (id == R.id.my_orders) {
-
-        } else if (id == R.id.my_payments) {
-            Intent i = new Intent(Main2Activity.this,PaymentActivity.class);
+            Intent i = new Intent(Main2Activity.this,MyOrdersActivity.class);
             startActivity(i);
 
-        } else if (id == R.id.help) {
-
-        } else if (id == R.id.sign_out) {
-
+        }  else if (id == R.id.sign_out) {
+            finish();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
