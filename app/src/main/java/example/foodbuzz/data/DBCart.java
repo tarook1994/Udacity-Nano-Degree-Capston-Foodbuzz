@@ -30,6 +30,8 @@ public class DBCart extends SQLiteOpenHelper {
     private static final String KEY_NAME = "name";
     private static final String KEY_NUMBEROFITEMS = "number";
     private static final String KEY_PRICE = "price";
+    private static final String KEY_URL = "url";
+
 
     public DBCart(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -40,7 +42,7 @@ public class DBCart extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_CART + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
-                + KEY_NUMBEROFITEMS + " TEXT," +KEY_PRICE + " TEXT"+ ")";
+                + KEY_NUMBEROFITEMS + " TEXT," +KEY_PRICE + " TEXT,"+KEY_URL+" TEXT"+ ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
 
@@ -62,6 +64,7 @@ public class DBCart extends SQLiteOpenHelper {
         values.put(KEY_NAME, orderItem.getName());
         values.put(KEY_NUMBEROFITEMS, orderItem.getNumber());
         values.put(KEY_PRICE, orderItem.getPrice());
+        values.put(KEY_URL, orderItem.getUrl());
         db.insert(TABLE_CART, null, values);
         db.close();
 
@@ -83,6 +86,7 @@ public class DBCart extends SQLiteOpenHelper {
                 orderItem.setName(cursor.getString(1));
                 orderItem.setNumber(cursor.getString(2));
                 orderItem.setPrice(cursor.getString(3));
+                orderItem.setUrl(cursor.getString(4));
 
                 orderList.add(orderItem);
             } while (cursor.moveToNext());
@@ -101,14 +105,15 @@ public class DBCart extends SQLiteOpenHelper {
 
     }
 
-    public int updateContact(OrderItem orderItem) {
+    public int updateCart(OrderItem orderItem) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(KEY_NUMBEROFITEMS, orderItem.getNumber());
 
         // updating row
-        return db.update(TABLE_CART, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(orderItem.getID()) });
+        String where = KEY_NAME+ "='" + orderItem.getName()+"'";
+        return db.update(TABLE_CART, values, where,
+                null);
     }
 }

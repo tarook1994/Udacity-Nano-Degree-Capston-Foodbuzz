@@ -8,7 +8,18 @@ public class OrderItem {
     String name;
     String number;
     String price;
+    String url;
     int ID;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+
 
     public int getID() {
         return ID;
@@ -43,11 +54,12 @@ public class OrderItem {
         this.price = price;
     }
 
-    public OrderItem(int ID,String name,String number,String price){
+    public OrderItem(int ID,String name,String number,String price,String url){
         this.ID = ID;
         this.name = name;
         this.number = number;
         this.price = price;
+        this.url = url;
     }
 
     public OrderItem(){

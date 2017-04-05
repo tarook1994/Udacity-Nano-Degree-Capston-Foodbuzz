@@ -93,10 +93,10 @@ public class SubCategoryActivity extends AppCompatActivity {
     }
 
     public void fabClick(){
-        order = cart.getAllOrder();
-        for(int i =0;i<order.size();i++){
-            Toast.makeText(this, "Found Item : "+order.get(i).getName(), Toast.LENGTH_SHORT).show();
-        }
+
+        Intent i = new Intent(SubCategoryActivity.this,CartActivity.class);
+        startActivity(i);
+        overridePendingTransition(R.anim.slide_up,R.anim.fade_out);
     }
 
     public void buildViews(){

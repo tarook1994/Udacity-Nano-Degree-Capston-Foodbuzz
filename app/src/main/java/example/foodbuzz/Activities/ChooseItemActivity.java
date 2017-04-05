@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 import example.foodbuzz.R;
 import example.foodbuzz.data.DBCart;
 import example.foodbuzz.data.OrderItem;
@@ -32,7 +34,8 @@ public class ChooseItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_item);
         buildViews();
-        modifiedPrice=0.0;
+        cart = new DBCart(getApplicationContext());
+        modifiedPrice=Double.parseDouble(getIntent().getStringExtra("price").replace("$",""));
         Picasso.with(getApplicationContext()).load(getIntent().getStringExtra("icon")).into(icon);
         currentCount =1;
         itemTitle.setText(getIntent().getStringExtra("title"));
@@ -105,9 +108,33 @@ public class ChooseItemActivity extends AppCompatActivity {
     }
 
     public void addToCartClick(){
-        cart = new DBCart(getApplicationContext());
-        OrderItem orderItem = new OrderItem(1,getIntent().getStringExtra("title"),currentCount+"",modifiedPrice+"");
-        cart.addRow(orderItem);
+        OrderItem orderItem = new OrderItem(1,getIntent().getStringExtra("title"),currentCount+"",modifiedPrice+"",
+                getIntent().getStringExtra("icon"));
+        if(checkDB(orderItem)<0){
+            cart.addRow(orderItem);
+        } else {
+            ArrayList<OrderItem> list ;
+            list = cart.getAllOrder();
+            String numberOld= list.get(checkDB(orderItem)).getNumber();
+            int updatedNumber = Integer.parseInt(numberOld)+currentCount;
+            double updatedPrice = updatedNumber*Double.parseDouble(getIntent().getStringExtra("price").replace("$",""));
+            OrderItem orderItemModified = new OrderItem(1,getIntent().getStringExtra("title"),updatedNumber+"",updatedPrice+"",
+                    getIntent().getStringExtra("icon"));
+            cart.updateCart(orderItemModified);
+        }
         finish();
+
     }
+    public int checkDB(OrderItem orderItem){
+        ArrayList<OrderItem> list ;
+        list = cart.getAllOrder();
+        int value=-1;
+        for(int i =0;i<list.size();i++){
+            if(list.get(i).getName().equals(orderItem.getName())){
+                value = i;
+            }
+        }
+        return value;
+    }
+
 }

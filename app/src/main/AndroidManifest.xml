@@ -62,7 +62,8 @@
         </receiver>
 
         <activity android:name=".Activities.SubCategoryActivity" />
-        <activity android:name=".Activities.ChooseItemActivity"></activity>
+        <activity android:name=".Activities.ChooseItemActivity" />
+        <activity android:name=".Activities.CartActivity"></activity>
     </application>
 
 </manifest>

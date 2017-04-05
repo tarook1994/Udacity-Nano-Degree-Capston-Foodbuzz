@@ -125,5 +125,7 @@
     <string name="add_cart">Add To Cart</string>
     <string name="price">Price : </string>
     <string name="total_price">Total : </string>
+    <string name="check_out">Check Out</string>
+
 
 </resources>
