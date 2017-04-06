@@ -20,6 +20,7 @@
                 android:minHeight="200dp"
                 android:elevation="4dp"
                 android:scaleType="centerCrop"
+                android:contentDescription="@string/item"
                 app:srcCompat="@drawable/average" />
 
             <android.support.v7.widget.CardView
@@ -74,7 +75,7 @@
                             android:layout_weight="0.13"
                             android:layout_height="wrap_content"
                             android:background="@color/accent"
-                            android:text="-"
+                            android:text="@string/minus"
                             android:textColor="@color/white"
                             android:textSize="30sp" />
 
@@ -86,8 +87,7 @@
                             android:ems="20"
                             android:layout_marginEnd="5dp"
                             android:layout_marginStart="5dp"
-                            android:inputType="number"
-                            android:text="1"
+                            android:text="@string/one"
                             android:textAlignment="center" />
 
                         <Button
@@ -96,7 +96,7 @@
                             android:layout_height="wrap_content"
                             android:background="@color/accent"
                             android:layout_weight="0.13"
-                            android:text="+"
+                            android:text="@string/plus"
                             android:textAlignment="center"
                             android:textColor="@android:color/white"
                             android:textSize="30sp" />

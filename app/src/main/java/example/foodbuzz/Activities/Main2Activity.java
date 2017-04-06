@@ -24,9 +24,6 @@ import android.view.MenuItem;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -57,9 +54,6 @@ public class Main2Activity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarmain);
         setSupportActionBar(toolbar);
 
-//        AdView mAdView = (AdView) findViewById(R.id.adView);
-//        AdRequest adRequest = new AdRequest.Builder().addTestDevice("F6D4AAD12B9EF5EB0EC01C34C4565239").build();
-//        mAdView.loadAd(adRequest);
 
         database = FirebaseDatabase.getInstance();
         myRef2 = database.getReference();
@@ -155,7 +149,6 @@ public class Main2Activity extends AppCompatActivity
                         editor.putString("check", "true");
                         editor.apply();
                         counter++;
-                        Toast.makeText(Main2Activity.this, "Created DB", Toast.LENGTH_SHORT).show();
                     }
 
 

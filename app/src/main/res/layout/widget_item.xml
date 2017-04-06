@@ -23,7 +23,8 @@
                 android:id="@+id/RestImageViewWidget"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="start"
+                android:contentDescription="@string/itemlogo"
+             android:layout_gravity="start"
                 android:layout_margin="5dp" />
         </LinearLayout>
 

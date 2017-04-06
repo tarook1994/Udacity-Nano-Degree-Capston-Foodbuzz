@@ -157,7 +157,6 @@ public class PaymentActivity extends AppCompatActivity {
                     }
                 }
             });
-            Toast.makeText(this, "Cash Payment", Toast.LENGTH_SHORT).show();
         }
 
     }

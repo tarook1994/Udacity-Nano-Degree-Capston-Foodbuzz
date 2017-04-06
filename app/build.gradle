@@ -3,9 +3,9 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         config {
-            keyAlias 'ahmed tarek'
+            keyAlias 'key0'
             keyPassword '123456'
-            storeFile file('C:/Users/DELL/Desktop/Nano-Degree/FoodBuzz/app/key.jks')
+            storeFile file('../app/key.jks')
             storePassword '123456'
         }
     }
@@ -22,7 +22,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.config
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
@@ -46,9 +46,7 @@ dependencies {
     compile 'com.google.firebase:firebase-database:9.2.0'
     compile 'com.google.firebase:firebase-auth:9.2.0'
     compile 'com.pitt.loading.library:library:0.8'
-    compile 'com.google.firebase:firebase-ads:9.2.0'
     compile 'com.simplify:simplify-android:3.0.0'
-    compile 'com.github.lzyzsd:circleprogress:1.2.1'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

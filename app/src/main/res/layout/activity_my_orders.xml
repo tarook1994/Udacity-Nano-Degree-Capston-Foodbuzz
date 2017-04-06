@@ -32,7 +32,7 @@
                 android:layout_marginTop="?actionBarSize"
                 android:src="@drawable/orders"
                 app:layout_collapseMode="parallax"
-                android:contentDescription="" />
+                android:contentDescription="@string/ordersIcon" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"

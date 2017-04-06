@@ -82,7 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
                             if(password.equals(passwordConfirm)){
                                 final ProgressDialog progressDialog = new ProgressDialog(RegisterActivity.this);
                                 progressDialog.setIndeterminate(true);
-                                progressDialog.setMessage("Registering...");
+                                progressDialog.setMessage(getResources().getString(R.string.registering));
                                 progressDialog.show();
                                 mAuth.createUserWithEmailAndPassword(mail, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                     @Override
@@ -104,7 +104,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                         finish();
                                                      } else {
                                                     progressDialog.dismiss();
-                                                    Toast.makeText(getApplicationContext(), "Login Failed Try Again", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.loginfailed), Toast.LENGTH_SHORT).show();
 
                                                   }
                                                 }
@@ -115,7 +115,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     }
                                 });
                             } else {
-                                passc.setError("Passwords Does Not Match");
+                                passc.setError(getResources().getString(R.string.passerror));
                             }
                         }
                     }

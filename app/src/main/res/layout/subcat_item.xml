@@ -18,7 +18,8 @@
             android:id="@+id/subImg"
             android:layout_width="0dp"
             android:layout_height="100dp"
-            android:layout_weight="0.3" />
+            android:contentDescription="@string/itemlogo"
+        android:layout_weight="0.3" />
 
         <LinearLayout
             android:layout_width="0dp"

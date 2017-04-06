@@ -32,7 +32,7 @@
                 android:layout_marginTop="?actionBarSize"
                 android:src="@drawable/profile"
                 app:layout_collapseMode="parallax"
-                android:contentDescription="" />
+                android:contentDescription="@string/profile" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"

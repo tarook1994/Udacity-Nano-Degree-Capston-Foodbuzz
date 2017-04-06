@@ -30,6 +30,7 @@
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
                 android:src="@drawable/fav"
+                android:contentDescription="@string/fav"
                 app:layout_collapseMode="parallax" />
 
             <android.support.v7.widget.Toolbar

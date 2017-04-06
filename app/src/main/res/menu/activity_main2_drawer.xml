@@ -5,15 +5,15 @@
         <item
             android:id="@+id/my_profile"
             android:icon="@drawable/myprofile"
-            android:title="My Profile" />
+            android:title="@string/myprofile" />
         <item
             android:id="@+id/my_orders"
             android:icon="@drawable/myorder"
-            android:title="My Orders" />
+            android:title="@string/myorders" />
         <item
             android:id="@+id/sign_out"
             android:icon="@drawable/signout"
-            android:title="Sign Out" />
+            android:title="@string/signout" />
     </group>
 
 

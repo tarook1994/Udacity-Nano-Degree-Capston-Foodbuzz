@@ -24,7 +24,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
-                android:src="@drawable/mc" />
+                android:contentDescription="@string/itemlogo"
+            android:src="@drawable/mc" />
         </LinearLayout>
 
         <LinearLayout
@@ -38,7 +39,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:gravity="center"
-                android:text="McDonald's"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
@@ -47,8 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="Burger Sandwitches, Salads and Ice Cream" />
+                android:gravity="center" />
 
             <LinearLayout
                 android:layout_width="match_parent"

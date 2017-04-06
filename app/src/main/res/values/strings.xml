@@ -134,6 +134,42 @@
     <string name="paymentok">Payment Successful</string>
     <string name="paymentno">Payment Not Successful! Your order is being prepared </string>
     <string name="orderok">Order is Successful! Your order is being prepared </string>
+    <string name="plus">+ </string>
+    <string name="minus">- </string>
+    <string name="one">1 </string>
+    <string name="myprofile">My Profile </string>
+    <string name="myorders">My Orders </string>
+    <string name="signout">Sign out </string>
+    <string name="loginfailed">Login Faile. Please try again later.</string>
+    <string name="passerror">Passwords Does Not Match</string>
+    <string name="registering">Registering...</string>
+    <string name="item">Category Item Image</string>
+    <string name="landdes">Landscape image for the restaurant</string>
+    <string name="fav">Favorites Image icon </string>
+    <string name="ordersIcon">Orders History Image icon </string>
+    <string name="cashI">Cash Payment </string>
+    <string name="cardI">Credit Card Payment </string>
+    <string name="profile">Your Profile Picture </string>
+    <string name="trail">FoodBuzz Logo </string>
+    <string name="catlogo">Category Logo </string>
+    <string name="itemlogo">Restaurant Logo </string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </resources>
