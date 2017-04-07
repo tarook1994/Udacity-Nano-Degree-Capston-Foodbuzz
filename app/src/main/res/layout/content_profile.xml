@@ -79,7 +79,7 @@
                 android:layout_height="25dp"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:contentDescription="email"
+                android:contentDescription="@string/email_hint"
                 android:src="@drawable/ic_action_name" />
 
             <EditText
@@ -113,7 +113,7 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_centerVertical="true"
-                android:contentDescription="password"
+                android:contentDescription="@string/pass_hint"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:src="@drawable/ic_action_name" />
 
