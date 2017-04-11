@@ -153,6 +153,10 @@
     <string name="trail">FoodBuzz Logo </string>
     <string name="catlogo">Category Logo </string>
     <string name="itemlogo">Restaurant Logo </string>
+    <string name="payment">Payment</string>
+    <string name="cart">Your Cart</string>
+
+
 
 
 

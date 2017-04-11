@@ -6,9 +6,30 @@
     android:layout_height="match_parent"
     tools:context="example.foodbuzz.Activities.CartActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:elevation="4dp"
+        android:id="@+id/relativeLay"
+        android:background="@color/primary">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/cart"
+            android:textColor="@color/white"
+            android:textSize="46sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLay"
+        android:layout_above="@+id/linearLay"
         android:id="@+id/cartList">
 
 
@@ -21,6 +42,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:padding="10dp"
+        android:elevation="4dp"
+        android:id="@+id/linearLay"
         android:background="@color/primary"
         android:weightSum="1">
 
