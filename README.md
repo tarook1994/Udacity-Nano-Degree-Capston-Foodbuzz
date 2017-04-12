@@ -31,3 +31,6 @@ FoodBuzz is an online platform that helps ordering food from restaurants online.
 
 ![alt tag](https://firebasestorage.googleapis.com/v0/b/foodbuzz-f558d.appspot.com/o/Cap4.png?alt=media&token=364c4b1a-4daf-43fd-86fc-d50451c73c08)     ![alt tag](https://firebasestorage.googleapis.com/v0/b/foodbuzz-f558d.appspot.com/o/Cap5.png?alt=media&token=4f8668ef-3b83-42f0-ab48-1af282cafa4d)       ![alt tag](https://firebasestorage.googleapis.com/v0/b/foodbuzz-f558d.appspot.com/o/Cap6.png?alt=media&token=af51fbad-4de0-4fb8-b5b7-08c4400e5141)
 
+![alt tag](https://firebasestorage.googleapis.com/v0/b/foodbuzz-f558d.appspot.com/o/cap3.png?alt=media&token=337a7ffd-c517-44cc-8bbe-2552ef68199a)   
+ 
+![alt tag](https://firebasestorage.googleapis.com/v0/b/foodbuzz-f558d.appspot.com/o/cap4.png?alt=media&token=0c0ac113-87f1-4a5c-8544-879af02868ba)    
