@@ -11,6 +11,10 @@
             android:icon="@drawable/myorder"
             android:title="@string/myorders" />
         <item
+            android:id="@+id/help"
+            android:icon="@drawable/help"
+            android:title="@string/help" />
+        <item
             android:id="@+id/sign_out"
             android:icon="@drawable/signout"
             android:title="@string/signout" />

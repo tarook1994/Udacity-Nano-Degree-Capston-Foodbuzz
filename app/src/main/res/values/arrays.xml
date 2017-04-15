@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="landing_bg">
+        <item>@color/primary</item>
+        <item>@color/accent</item>
+        <item>@color/colorAccent</item>
+        <item>@color/tut</item>
+
+    </array>
+
+    <array name="icons">
+        <item>@drawable/tut1</item>
+        <item>@drawable/tut2</item>
+        <item>@drawable/tut3</item>
+        <item>@drawable/tut4</item>
+
+    </array>
+
+
+    <string-array name="titles" >
+
+        <item>@string/tut1</item>
+        <item>@string/tut2</item>
+        <item>@string/tut3</item>
+        <item>@string/tut4</item>
+
+    </string-array>
+
+    <string-array name="hints" >
+
+        <item>@string/hint1</item>
+        <item>@string/hint2</item>
+        <item>@string/hint3</item>
+        <item>@string/hint4</item>
+
+    </string-array>
+</resources>

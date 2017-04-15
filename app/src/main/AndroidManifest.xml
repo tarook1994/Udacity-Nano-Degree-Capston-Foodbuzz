@@ -66,7 +66,8 @@
         <activity android:name=".Activities.CartActivity" />
         <activity
             android:name=".Activities.MyOrdersActivity"
-            android:theme="@style/AppThemeBase"></activity>
+            android:theme="@style/AppThemeBase" />
+        <activity android:name=".Activities.GoogleCardsActivity"></activity>
     </application>
 
 </manifest>

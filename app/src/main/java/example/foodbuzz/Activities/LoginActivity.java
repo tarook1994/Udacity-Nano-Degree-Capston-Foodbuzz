@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -39,6 +40,15 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if(preferences.getString("firstTime","").equals("") ){
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("firstTime","yes");
+            editor.apply();
+            Log.d("shared",preferences.getString("firstTime",""));
+            Intent i = new Intent(LoginActivity.this,GoogleCardsActivity.class);
+            startActivity(i);
+        }
         mAuth = FirebaseAuth.getInstance();
         buildViews();
         login.setOnClickListener(new View.OnClickListener() {

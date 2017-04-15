@@ -245,6 +245,9 @@ public class Main2Activity extends AppCompatActivity
 
         }  else if (id == R.id.sign_out) {
             finish();
+        } else {
+            Intent i = new Intent(Main2Activity.this,GoogleCardsActivity.class);
+            startActivity(i);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
