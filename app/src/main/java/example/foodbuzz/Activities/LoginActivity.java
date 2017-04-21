@@ -20,26 +20,106 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import example.foodbuzz.R;
 
 public class LoginActivity extends AppCompatActivity {
-    Button login;
+    Button login,btnFacebook;
     TextView register;
     EditText email,password;
     private FirebaseAuth mAuth;
+    private CallbackManager callbackManager;
+    private AccessTokenTracker accessTokenTracker;
+    private ProfileTracker profileTracker;
+    private FacebookCallback<LoginResult> callback;
+    LoginButton loginButton;
     View c;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
+        accessTokenTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(AccessToken oldToken, AccessToken newToken) {
+            }
+        };
+        profileTracker = new ProfileTracker() {
+            @Override
+            protected void onCurrentProfileChanged(Profile oldProfile, Profile newProfile) {
+                nextActivity(newProfile);
+            }
+        };
+        accessTokenTracker.startTracking();
+        profileTracker.startTracking();
+        callbackManager = CallbackManager.Factory.create();
+        loginButton = (LoginButton) findViewById(R.id.login_button);
+        callback = new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Profile profile = Profile.getCurrentProfile();
+                if(profile!=null){
+                    String fbID = profile.getId();
+                    String token = FirebaseInstanceId.getInstance().getToken();
+                    System.out.println("MainActivity.onCreate: " + FirebaseInstanceId.getInstance().getToken());
+                    nextActivity(profile);
+                } else {
+                    profileTracker = new ProfileTracker() {
+                        @Override
+                        protected void onCurrentProfileChanged(Profile profile, Profile newProfile) {
+                            // profile2 is the new profile
+                            Log.v("facebook - profile", newProfile.getFirstName());
+                            String fbID = newProfile.getId();
+                            String token = FirebaseInstanceId.getInstance().getToken();
+                            System.out.println("MainActivity.onCreate: " + FirebaseInstanceId.getInstance().getToken());
+                            nextActivity(newProfile);
+                            profileTracker.stopTracking();
+                        }
+                    };
+                }
+
+
+            }
+
+            @Override
+            public void onCancel() {
+            }
+
+            @Override
+            public void onError(FacebookException e) {
+            }
+        };
+        loginButton.setReadPermissions("user_friends");
+        loginButton.registerCallback(callbackManager, callback);
+        btnFacebook = (Button) findViewById(R.id.btn_facebook);
+        btnFacebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginButton.callOnClick();
+
+            }
+        });
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         if(preferences.getString("firstTime","").equals("") ){
             SharedPreferences.Editor editor = preferences.edit();
@@ -67,6 +147,32 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+
+    protected void onStop() {
+        super.onStop();
+        //Facebook login
+        accessTokenTracker.stopTracking();
+        profileTracker.stopTracking();
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int responseCode, Intent intent) {
+        super.onActivityResult(requestCode, responseCode, intent);
+        callbackManager.onActivityResult(requestCode, responseCode, intent);
+    }
+
+    private void nextActivity(Profile profile) {
+        if (profile != null) {
+            Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+            Intent main = new Intent(LoginActivity.this, Main2Activity.class);
+            main.putExtra("Fbname", profile.getFirstName());
+            main.putExtra("Fbsurname", profile.getLastName());
+            main.putExtra("FbimageUrl", profile.getProfilePictureUri(200, 200).toString());
+            main.putExtra("userID", profile.getId());
+            Log.d("userID log", profile.getId());
+            startActivity(main);
+            finish();
+        }
     }
 
     public void buildViews(){

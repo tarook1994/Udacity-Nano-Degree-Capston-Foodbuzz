@@ -1,7 +1,7 @@
 # Udacity-Nano-Degree-Capston-Foodbuzz
 
-# NOTE!!
-The Application is not yet finalized. Therfore I will keep pushing up updates till it is finalized.
+# PlayStore Link
+https://play.google.com/store/apps/details?id=example.foodbuzz
 
 # Description
 

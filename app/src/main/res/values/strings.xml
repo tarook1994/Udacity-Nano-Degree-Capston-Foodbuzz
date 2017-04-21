@@ -138,7 +138,8 @@
     <string name="minus">- </string>
     <string name="one">1 </string>
     <string name="help">Help</string>
-
+    <string name="facebook_app_id">1484283014936731</string>
+    <string name="fb_login_protocol_scheme">fb1484283014936731</string>
     <string name="myprofile">My Profile </string>
     <string name="myorders">My Orders </string>
     <string name="signout">Sign out </string>
