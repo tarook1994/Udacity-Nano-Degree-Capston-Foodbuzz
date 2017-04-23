@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import example.foodbuzz.R;
+import example.foodbuzz.data.User;
 
 public class RegisterActivity extends AppCompatActivity {
     String username,password,passwordConfirm,number,mail;
@@ -125,26 +126,4 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    class User {
-
-        public String username;
-        public String email;
-        public String phone;
-        public String photoUrl;
-        public String historyLinks;
-
-
-        public User() {
-            // Default constructor required for calls to DataSnapshot.getValue(User.class)
-        }
-
-        public User(String name, String email, String photoUrl,String phone) {
-            this.username = name;
-            this.email = email;
-            this.photoUrl = photoUrl;
-            this.historyLinks = "null";
-            this.phone = phone;
-        }
-
-    }
 }

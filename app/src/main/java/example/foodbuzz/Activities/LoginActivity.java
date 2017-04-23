@@ -26,6 +26,8 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.appevents.AppEventsLogger;
@@ -38,10 +40,17 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
+
+import org.json.JSONObject;
+
+import java.util.Arrays;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import example.foodbuzz.R;
+import example.foodbuzz.data.User;
 
 public class LoginActivity extends AppCompatActivity {
     Button login,btnFacebook;
@@ -54,10 +63,15 @@ public class LoginActivity extends AppCompatActivity {
     private FacebookCallback<LoginResult> callback;
     LoginButton loginButton;
     View c;
+    String emailFace="";
+    private FirebaseDatabase database;
+    private DatabaseReference myRef2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        database = FirebaseDatabase.getInstance();
+        myRef2 = database.getReference();
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
         accessTokenTracker = new AccessTokenTracker() {
@@ -78,26 +92,55 @@ public class LoginActivity extends AppCompatActivity {
         callback = new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Profile profile = Profile.getCurrentProfile();
-                if(profile!=null){
-                    String fbID = profile.getId();
-                    String token = FirebaseInstanceId.getInstance().getToken();
-                    System.out.println("MainActivity.onCreate: " + FirebaseInstanceId.getInstance().getToken());
-                    nextActivity(profile);
-                } else {
-                    profileTracker = new ProfileTracker() {
-                        @Override
-                        protected void onCurrentProfileChanged(Profile profile, Profile newProfile) {
-                            // profile2 is the new profile
-                            Log.v("facebook - profile", newProfile.getFirstName());
-                            String fbID = newProfile.getId();
-                            String token = FirebaseInstanceId.getInstance().getToken();
-                            System.out.println("MainActivity.onCreate: " + FirebaseInstanceId.getInstance().getToken());
-                            nextActivity(newProfile);
-                            profileTracker.stopTracking();
-                        }
-                    };
-                }
+                GraphRequest request = GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                Log.v("LoginActivity", response.toString());
+                                String emailFacebook="";
+                                // Application code
+                                try {
+
+                                    emailFacebook = object.getString("email");
+                                    emailFace = emailFacebook;
+                                    Log.d("email",emailFacebook);
+//                                    String birthday = object.getString("birthday"); // 01/31/1980 format
+                                } catch (Exception e){
+                                    Toast.makeText(LoginActivity.this, "Error "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                                Profile profile = Profile.getCurrentProfile();
+                                if(profile!=null){
+                                    SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
+                                    editor.putString("email",emailFacebook);
+                                    editor.apply();
+                                    User user = new User(profile.getFirstName(),emailFacebook,"null","null");
+                                    myRef2.child("users").child(emailFacebook.replace(".","")).setValue(user);
+                                    nextActivity(profile);
+                                } else {
+                                    final String newEmail = emailFacebook;
+                                    profileTracker = new ProfileTracker() {
+                                        @Override
+                                        protected void onCurrentProfileChanged(Profile profile, Profile newProfile) {
+                                            SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
+                                            editor.putString("email",newEmail);
+                                            editor.apply();
+                                            nextActivity(newProfile);
+                                            User user = new User(profile.getFirstName(),newEmail,"null","null");
+                                            myRef2.child("users").child(newEmail).setValue(user);
+                                            profileTracker.stopTracking();
+                                        }
+                                    };
+                                }
+
+                            }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,email,gender,birthday");
+                request.setParameters(parameters);
+                request.executeAsync();
+
+
 
 
             }
@@ -110,7 +153,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onError(FacebookException e) {
             }
         };
-        loginButton.setReadPermissions("user_friends");
+        loginButton.setReadPermissions(Arrays.asList(
+                "public_profile", "email", "user_birthday", "user_friends"));
         loginButton.registerCallback(callbackManager, callback);
         btnFacebook = (Button) findViewById(R.id.btn_facebook);
         btnFacebook.setOnClickListener(new View.OnClickListener() {
@@ -169,6 +213,7 @@ public class LoginActivity extends AppCompatActivity {
             main.putExtra("Fbsurname", profile.getLastName());
             main.putExtra("FbimageUrl", profile.getProfilePictureUri(200, 200).toString());
             main.putExtra("userID", profile.getId());
+            main.putExtra("email",emailFace);
             Log.d("userID log", profile.getId());
             startActivity(main);
             finish();
@@ -236,4 +281,6 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
+
+
 }
