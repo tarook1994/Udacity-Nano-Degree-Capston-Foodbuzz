@@ -39,7 +39,7 @@
             android:theme="@style/AppThemeBase" />
         <activity
             android:name=".Activities.ProfileActivity"
-            android:label="@string/title_activity_profile"
+            android:label=" "
             android:theme="@style/AppThemeBase" />
         <activity
             android:name=".Activities.FavActivity"

@@ -21,6 +21,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -164,6 +166,8 @@ public class Main2Activity extends AppCompatActivity
                 rest.setVisibility(View.VISIBLE);
                 fab.setVisibility(View.VISIBLE);
                 fab.animate().alpha(1.0f).setDuration(100);
+                Animation animation = AnimationUtils.loadAnimation(getApplication(), R.anim.fab_anim);
+                fab.startAnimation(animation);
                 rest.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(),
                         rest,new RecyclerTouchListener.ClickListener() {
 
@@ -237,6 +241,7 @@ public class Main2Activity extends AppCompatActivity
         if (id == R.id.my_profile) {
             Intent i = new Intent(Main2Activity.this,ProfileActivity.class);
             i.putExtra("email",getIntent().getStringExtra("email"));
+            i.putExtra("pic",getIntent().getStringExtra("FbimageUrl"));
             startActivity(i);
 
         } else if (id == R.id.my_orders) {

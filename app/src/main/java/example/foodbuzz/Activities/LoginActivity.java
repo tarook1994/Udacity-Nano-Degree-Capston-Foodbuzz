@@ -82,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
         profileTracker = new ProfileTracker() {
             @Override
             protected void onCurrentProfileChanged(Profile oldProfile, Profile newProfile) {
+                Log.d("fe eh","hena");
                 nextActivity(newProfile);
             }
         };
@@ -105,7 +106,8 @@ public class LoginActivity extends AppCompatActivity {
                                     emailFacebook = object.getString("email");
                                     emailFace = emailFacebook;
                                     Log.d("email",emailFacebook);
-//                                    String birthday = object.getString("birthday"); // 01/31/1980 format
+                                   String birthday = object.getString("picture"); // 01/31/1980 format
+
                                 } catch (Exception e){
                                     Toast.makeText(LoginActivity.this, "Error "+e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
@@ -116,6 +118,7 @@ public class LoginActivity extends AppCompatActivity {
                                     editor.apply();
                                     User user = new User(profile.getFirstName(),emailFacebook,"null","null");
                                     myRef2.child("users").child(emailFacebook.replace(".","")).setValue(user);
+                                    Log.d("Taroo2","not null");
                                     nextActivity(profile);
                                 } else {
                                     final String newEmail = emailFacebook;
@@ -125,10 +128,12 @@ public class LoginActivity extends AppCompatActivity {
                                             SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
                                             editor.putString("email",newEmail);
                                             editor.apply();
-                                            nextActivity(newProfile);
                                             User user = new User(profile.getFirstName(),newEmail,"null","null");
                                             myRef2.child("users").child(newEmail).setValue(user);
                                             profileTracker.stopTracking();
+                                            Log.d("Taroo2","null");
+                                            nextActivity(newProfile);
+
                                         }
                                     };
                                 }
@@ -136,7 +141,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         });
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,email,gender,birthday");
+                parameters.putString("fields", "id,name,email,gender,birthday,picture");
                 request.setParameters(parameters);
                 request.executeAsync();
 
@@ -193,6 +198,14 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Facebook login
+        Profile profile = Profile.getCurrentProfile();
+        nextActivity(profile);
+    }
+
     protected void onStop() {
         super.onStop();
         //Facebook login
@@ -217,6 +230,8 @@ public class LoginActivity extends AppCompatActivity {
             Log.d("userID log", profile.getId());
             startActivity(main);
             finish();
+        } else {
+            Log.d("Taroo22","null");
         }
     }
 
