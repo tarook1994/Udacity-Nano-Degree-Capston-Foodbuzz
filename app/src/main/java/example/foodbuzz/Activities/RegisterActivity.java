@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,6 +46,12 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onRegisterClick();
+            }
+        });
+        goLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 
@@ -91,6 +98,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         if(task.isSuccessful()){
                                             SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
                                             editor.putString("email",email.getText().toString());
+                                            editor.putString("type","firebase");
                                             editor.apply();
                                             User user = new User(username,mail,"null",number);
                                             String mailWithNoDot = mail.replace(".","");

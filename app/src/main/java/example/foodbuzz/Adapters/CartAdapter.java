@@ -61,7 +61,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
         holder.cartItemPrice.setText(item.getPrice()+" $ x "+item.getNumber());
         double finalPrice = Integer.parseInt(item.getNumber())*Double.parseDouble(item.getPrice().replace("$",""));
         total += finalPrice;
-        holder.cartItemTotalPrice.setText(finalPrice+"");
+        holder.cartItemTotalPrice.setText(finalPrice+" $");
         Picasso.with(c).load(order.get(position).getUrl()).into(holder.cartImg);
 
 

@@ -61,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
     private AccessTokenTracker accessTokenTracker;
     private ProfileTracker profileTracker;
     private FacebookCallback<LoginResult> callback;
+    boolean pressedOnLogin = false;
     LoginButton loginButton;
     View c;
     String emailFace="";
@@ -79,15 +80,15 @@ public class LoginActivity extends AppCompatActivity {
             protected void onCurrentAccessTokenChanged(AccessToken oldToken, AccessToken newToken) {
             }
         };
-        profileTracker = new ProfileTracker() {
-            @Override
-            protected void onCurrentProfileChanged(Profile oldProfile, Profile newProfile) {
-                Log.d("fe eh","hena");
-                nextActivity(newProfile);
-            }
-        };
+//        profileTracker = new ProfileTracker() {
+//            @Override
+//            protected void onCurrentProfileChanged(Profile oldProfile, Profile newProfile) {
+//                Log.d("fe eh","hena");
+//                nextActivity(newProfile);
+//            }
+//        };
         accessTokenTracker.startTracking();
-        profileTracker.startTracking();
+//        profileTracker.startTracking();
         callbackManager = CallbackManager.Factory.create();
         loginButton = (LoginButton) findViewById(R.id.login_button);
         callback = new FacebookCallback<LoginResult>() {
@@ -115,6 +116,7 @@ public class LoginActivity extends AppCompatActivity {
                                 if(profile!=null){
                                     SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
                                     editor.putString("email",emailFacebook);
+                                    editor.putString("type","facebook");
                                     editor.apply();
                                     User user = new User(profile.getFirstName(),emailFacebook,"null","null");
                                     myRef2.child("users").child(emailFacebook.replace(".","")).setValue(user);
@@ -127,6 +129,7 @@ public class LoginActivity extends AppCompatActivity {
                                         protected void onCurrentProfileChanged(Profile profile, Profile newProfile) {
                                             SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
                                             editor.putString("email",newEmail);
+                                            editor.putString("type","facebook");
                                             editor.apply();
                                             User user = new User(profile.getFirstName(),newEmail,"null","null");
                                             myRef2.child("users").child(newEmail).setValue(user);
@@ -166,6 +169,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loginButton.callOnClick();
+                pressedOnLogin = true;
 
             }
         });
@@ -202,15 +206,20 @@ public class LoginActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         //Facebook login
-        Profile profile = Profile.getCurrentProfile();
-        nextActivity(profile);
+        if(!pressedOnLogin){
+            Profile profile = Profile.getCurrentProfile();
+            nextActivity(profile);
+        } else {
+            pressedOnLogin =false;
+        }
+
     }
 
     protected void onStop() {
         super.onStop();
         //Facebook login
         accessTokenTracker.stopTracking();
-        profileTracker.stopTracking();
+       // profileTracker.stopTracking();
     }
     @Override
     protected void onActivityResult(int requestCode, int responseCode, Intent intent) {
@@ -268,6 +277,7 @@ public class LoginActivity extends AppCompatActivity {
                                 progressDialog.dismiss();
                                 SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
                                 editor.putString("email",email.getText().toString());
+                                editor.putString("type","firebase");
                                 editor.apply();
                                 Intent i = new Intent(LoginActivity.this,Main2Activity.class);
                                 i.putExtra("email",email.getText().toString());

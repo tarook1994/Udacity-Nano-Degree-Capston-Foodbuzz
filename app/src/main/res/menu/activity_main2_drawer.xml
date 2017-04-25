@@ -4,11 +4,11 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/my_profile"
-            android:icon="@drawable/myprofile"
+            android:icon="@drawable/profileuser"
             android:title="@string/myprofile" />
         <item
             android:id="@+id/my_orders"
-            android:icon="@drawable/myorder"
+            android:icon="@drawable/history"
             android:title="@string/myorders" />
         <item
             android:id="@+id/help"
@@ -16,7 +16,7 @@
             android:title="@string/help" />
         <item
             android:id="@+id/sign_out"
-            android:icon="@drawable/signout"
+            android:icon="@drawable/exit"
             android:title="@string/signout" />
     </group>
 

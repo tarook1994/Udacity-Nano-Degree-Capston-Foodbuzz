@@ -82,7 +82,7 @@ public class CartActivity extends AppCompatActivity {
             itemFinalPrice= Integer.parseInt(order.get(i).getNumber())*Double.parseDouble(order.get(i).getPrice().replace("$",""));
             totalPrice += itemFinalPrice;
         }
-        total.setText(getResources().getString(R.string.total_price)+totalPrice);
+        total.setText(getResources().getString(R.string.total_price)+" "+totalPrice+" $");
 
     }
 }

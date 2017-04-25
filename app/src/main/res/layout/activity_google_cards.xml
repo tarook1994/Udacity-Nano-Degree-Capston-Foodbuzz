@@ -10,7 +10,9 @@
         android:id="@+id/pager"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@null" />
+        android:background="@null"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
     <example.foodbuzz.Adapters.CirclePageIndicator
         android:id="@+id/indicator"
@@ -25,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="25dp"
         android:layout_marginStart="146dp"
         android:background="@color/tutbut"
         android:text="GOT IT"
